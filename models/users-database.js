@@ -27,9 +27,9 @@ const getUser= async(id)=>{
 }
 
 // Query created to add a new user to the database.
-const addUser= async(userID, firstName, lastname, emailAdd, userPass)=>{
+const addUser= async(userID, firstName, lastname, userRole, emailAdd, userPass)=>{
     const [user] = await pool.query(`
-        INSERT INTO Users((userID, firstName, lastName, emailAdd, userPass) VALUES (?,?,?,?,?)
+        INSERT INTO Users((userID, firstName, lastName, userRole, emailAdd, userPass) VALUES (?,?,?,?,?,?)
     `,[userID, firstName, lastname, emailAdd, userPass])
     return getUsers(user.InsertId)
 }
@@ -44,12 +44,12 @@ const deleteUser = async(id)=>{
 } 
 
 // Query created to edit information of users in the database.
-const editUser = async(userID, firstName, lastname, emailAdd, userPass,id)=>{
+const editUser = async(userID, firstName, lastname, userRole, emailAdd, userPass,id)=>{
     await pool.query(`
         UPDATE Users
-        SET userID = ?, firstName = ?, lastname = ?, emailAdd = ?, userPass=?
+        SET userID = ?, firstName = ?, lastname = ?, userRole = ?, emailAdd = ?, userPass=?
         WHERE id = ?
-    `,[userID, firstName, lastname, emailAdd, userPass, id])
+    `,[userID, firstName, lastname, userRole, emailAdd, userPass, id])
     return getUsers()
 }
 

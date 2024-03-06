@@ -1,3 +1,4 @@
+import bcrypt from 'bcrypt';
 import {getUsers, getUser, addUser, editUser, deleteUser} from '../models/users-database'
 
 export default{
@@ -10,9 +11,16 @@ export default{
     },
 
     addUser: async(req, res)=>{
-        const {userID, firstName, lastname, emailAdd, userPass} = req.body;
-        await addUser(userID, firstName, lastname, emailAdd, userPass);
-        res.send(await getUsers())
+        const {firstName, lastname, userRole, emailAdd, userPass} = req.body;
+        bcrypt.hash(userPass, 10, async(err,hash)=>{
+            if(err) throw err
+            await addUser(firstName, lastname, userRole, emailAdd, hash)
+            res.send({
+                msg: "Your account has been Created"
+            })
+        })
+        // await addUser(firstName, lastname, emailAdd, userPass);
+        // res.send(await getUsers())
     },
 
     deleteUser: async(req, res)=>{
@@ -21,21 +29,23 @@ export default{
 
     editUser: async(req, res)=>{
         async(req,res)=>{ 
-            const [user] = await getProduct(+req.params.id)
+            const [user] = await getUsers(+req.params.id)
     
-            let {userID, firstName, lastname, emailAdd, userPass} = req.body
+            let {userID, firstName, lastname, userRole, emailAdd, userPass} = req.body
     
             userID ? userID=userID: {userID}=user
     
             firstName ? firstName= firstName: {firstName}=user
     
             lastname ? lastname= lastname: {lastname}=user
+
+            userRole ? userRole= userRole: {userRole}=user
     
             emailAdd ? emailAdd= emailAdd: {emailAdd}=user
     
             userPass ? userPass= userPass: {userPass}=user
     
-            await editUser(userID, firstName, lastname, emailAdd, userPass,+req.params.id)
+            await editUser(userID, firstName, lastname, userRole, emailAdd, userPass,+req.params.id)
             
             res.json(await getUsers())
         }
