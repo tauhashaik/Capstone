@@ -1,14 +1,4 @@
-import mysql from 'mysql2'
-import {config} from 'dotenv'
-config()
-
-// connecting the database in mysql with the backend.
-const pool=mysql.createPool({
-    host:process.env.host,
-    user:process.env.user,
-    password:process.env.password,
-    database:process.env.database
-}).promise()
+import {pool} from '../config/config.js'
 
 // Query created to get all Flights from the database
 const getFlights= async()=>{
@@ -29,24 +19,24 @@ const getFlight= async(id)=>{
 // Query created to add a new Flight to the database.
 const addFlight= async(flightID, flightName, flightDesc, seatsAvail, flightPrice)=>{
     const [user] = await pool.query(`
-        INSERT INTO Users((flightID, flightName, flightDesc, seatsAvail, flightPrice) VALUES (?,?,?,?,?)
+        INSERT INTO Flights((flightID, flightName, flightDesc, seatsAvail, flightPrice) VALUES (?,?,?,?,?)
     `,[flightID, flightName, flightDesc, seatsAvail, flightPrice])
     return getFlights(user.InsertId)
 }
 
-// Query created to delete users from the database.
+// Query created to delete Flights from the database.
 const deleteFlight = async(id)=>{
     const [flight] = await pool.query(`
-        DELETE FROM Users
+        DELETE FROM Flights
         WHERE id = ?
     `,[id])
     return getFlights(flight.deleteId)
 } 
 
-// Query created to edit information of users in the database.
+// Query created to edit information of Flights in the database.
 const editFlight = async(flightID, flightName, flightDesc, seatsAvail, flightPrice,id)=>{
     await pool.query(`
-        UPDATE Users
+        UPDATE Flights
         SET flightID = ?, flightName = ?, flightDesc = ?, seatsAvail = ?, flightPrice=?
         WHERE id = ?
     `,[flightID, flightName, flightDesc, seatsAvail, flightPrice, id])
@@ -54,4 +44,4 @@ const editFlight = async(flightID, flightName, flightDesc, seatsAvail, flightPri
 }
 
 
-export {getFlights, getFlight, addFlight,deleteFlight,editFlight}
+export {getFlights, getFlight, addFlight, deleteFlight, editFlight}

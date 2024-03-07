@@ -1,5 +1,5 @@
 import express from 'express';
-import controller from '../controller/users'
+import controller from '../controller/users.js'
 
 const router = express.Router();
 
@@ -16,4 +16,4 @@ router
         .patch(controller.editUser)
 
 
-export default router
+export default router 

@@ -1,14 +1,5 @@
-import mysql from 'mysql2'
-import {config} from 'dotenv'
-config()
-
-// connecting the database in mysql with the backend.
-const pool=mysql.createPool({
-    host:process.env.host,
-    user:process.env.user,
-    password:process.env.password,
-    database:process.env.database
-}).promise()
+import {pool} from '../config/config.js'
+import bcrypt from 'bcrypt'
 
 // Query created to get all users from the database
 const getUsers= async()=>{
@@ -22,15 +13,15 @@ const getUser= async(id)=>{
     const[result] = await pool.query(`
     SELECT * 
     FROM Users
-    WHERE id = ?`,[id])
+    WHERE userID = ?`,[id])
     return result
 }
 
 // Query created to add a new user to the database.
-const addUser= async(userID, firstName, lastname, userRole, emailAdd, userPass)=>{
+const addUser= async(firstName, lastName, userRole, emailAdd, userPass)=>{
     const [user] = await pool.query(`
-        INSERT INTO Users((userID, firstName, lastName, userRole, emailAdd, userPass) VALUES (?,?,?,?,?,?)
-    `,[userID, firstName, lastname, emailAdd, userPass])
+        INSERT INTO Users(firstName, lastName, userRole, emailAdd, userPass) VALUES (?,?,?,?,?)
+    `,[firstName, lastName, userRole, emailAdd, userPass])
     return getUsers(user.InsertId)
 }
 
@@ -38,20 +29,39 @@ const addUser= async(userID, firstName, lastname, userRole, emailAdd, userPass)=
 const deleteUser = async(id)=>{
     const [user] = await pool.query(`
         DELETE FROM Users
-        WHERE id = ?
+        WHERE userID= ?
     `,[id])
     return getUsers(user.deleteId)
 } 
 
-// Query created to edit information of users in the database.
-const editUser = async(userID, firstName, lastname, userRole, emailAdd, userPass,id)=>{
-    await pool.query(`
+const editUser = async(firstName, lastName, userRole, emailAdd, userPass, userID,user)=>{
+    if (userPass){
+        bcrypt.hash(userPass, 10 ,async(err, hash)=>{
+            if(err) throw err;
+            await pool.query(`
+                UPDATE Users
+                SET firstName = ?, lastName = ?, userRole = ?, emailAdd = ?, userPass=?
+                WHERE userID = ?
+            `,[firstName, lastName, userRole, emailAdd, hash, userID])
+        })
+    }else{
+        
+        userPass ? userPass= userPass: {userPass}=user
+        console.log(firstName);
+        await pool.query(`
         UPDATE Users
-        SET userID = ?, firstName = ?, lastname = ?, userRole = ?, emailAdd = ?, userPass=?
-        WHERE id = ?
-    `,[userID, firstName, lastname, userRole, emailAdd, userPass, id])
-    return getUsers()
+        SET firstName = ?, lastName = ?, userRole = ?, emailAdd = ?, userPass=?
+        WHERE userID = ?
+        `,[firstName, lastName, userRole, emailAdd, userPass,userID])
+    }
+    return getUsers();
+}
+
+const verifyPass = async(emailAdd)=>{
+    const [[{userPass}]] = await pool.query(`
+        SELECT userPass FROM Users WHERE emailAdd = ?`, [emailAdd])
+        return userPass
 }
 
 // exporting all queries to be imported and used in other files.
-export {getUsers, getUser, addUser, editUser, deleteUser}
+export {getUsers, getUser, addUser, editUser, deleteUser, verifyPass}

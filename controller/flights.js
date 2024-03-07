@@ -1,4 +1,4 @@
-import {getFlights, getFlight, addFlight,deleteFlight,editFlight} from '../models/flights-database'
+import {getFlights, getFlight, addFlight, deleteFlight, editFlight} from '../models/flights-database.js'
 
 export default{
     getFlights: async(req, res)=>{
@@ -10,12 +10,8 @@ export default{
     },
 
     addFlight: async(req, res)=>{
-
-    },
-
-    addUser: async(req, res)=>{
         const {flightName, flightDesc, seatsAvail, flightPrice} = req.body;
-        await addUser(flightName, flightDesc, seatsAvail, flightPrice);
+        await addFlight(flightName, flightDesc, seatsAvail, flightPrice);
         res.send(await getFlights())
     },
 
@@ -23,8 +19,7 @@ export default{
         res.send(await deleteFlight(req.params.id))
     },
 
-    editFlight: async(req, res)=>{
-        async(req,res)=>{ 
+    editFlight: async(req,res)=>{ 
             const [flight] = await getFlights(+req.params.id)
     
             let {flightID, flightName, flightDesc, seatsAvail, flightPrice} = req.body
@@ -44,5 +39,4 @@ export default{
             res.json(await getFlights())
         }
     }
-}
 
