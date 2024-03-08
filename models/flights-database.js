@@ -17,10 +17,10 @@ const getFlight= async(id)=>{
 }
 
 // Query created to add a new Flight to the database.
-const addFlight= async(flightID, flightName, flightDesc, seatsAvail, flightPrice)=>{
+const addFlight= async(flightName, flightDesc, seatsAvail, flightPrice)=>{
     const [user] = await pool.query(`
-        INSERT INTO Flights((flightID, flightName, flightDesc, seatsAvail, flightPrice) VALUES (?,?,?,?,?)
-    `,[flightID, flightName, flightDesc, seatsAvail, flightPrice])
+        INSERT INTO Flights(flightName, flightDesc, seatsAvail, flightPrice) VALUES (?,?,?,?)
+    `,[flightName, flightDesc, seatsAvail, flightPrice])
     return getFlights(user.InsertId)
 }
 
@@ -28,18 +28,18 @@ const addFlight= async(flightID, flightName, flightDesc, seatsAvail, flightPrice
 const deleteFlight = async(id)=>{
     const [flight] = await pool.query(`
         DELETE FROM Flights
-        WHERE id = ?
+        WHERE flightID = ?
     `,[id])
     return getFlights(flight.deleteId)
 } 
 
 // Query created to edit information of Flights in the database.
-const editFlight = async(flightID, flightName, flightDesc, seatsAvail, flightPrice,id)=>{
+const editFlight = async(flightName, flightDesc, seatsAvail, flightPrice,flightID)=>{
     await pool.query(`
         UPDATE Flights
-        SET flightID = ?, flightName = ?, flightDesc = ?, seatsAvail = ?, flightPrice=?
-        WHERE id = ?
-    `,[flightID, flightName, flightDesc, seatsAvail, flightPrice, id])
+        SET flightName = ?, flightDesc = ?, seatsAvail = ?, flightPrice=?
+        WHERE flightID = ?
+    `,[flightName, flightDesc, seatsAvail, flightPrice, flightID])
     return getFlights()
 }
 

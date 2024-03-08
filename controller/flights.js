@@ -22,9 +22,7 @@ export default{
     editFlight: async(req,res)=>{ 
             const [flight] = await getFlights(+req.params.id)
     
-            let {flightID, flightName, flightDesc, seatsAvail, flightPrice} = req.body
-    
-            flightID ? flightID=flightID: {flightID}=flight
+            let {flightName, flightDesc, seatsAvail, flightPrice} = req.body
     
             flightName ? flightName= flightName: {flightName}=flight
     
@@ -34,7 +32,7 @@ export default{
     
             flightPrice ? flightPrice= flightPrice: {flightPrice}=flight
     
-            await editFlight(flightID, flightName, flightDesc, seatsAvail, flightPrice,+req.params.id)
+            await editFlight(flightName, flightDesc, seatsAvail, flightPrice,+req.params.id)
             
             res.json(await getFlights())
         }
