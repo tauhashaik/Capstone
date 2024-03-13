@@ -6,12 +6,12 @@ export default{
     },
 
     getFlight: async(req, res)=>{
-        res.send(await getFlight())
+        res.send(await getFlight(+req.params.id))
     },
 
     addFlight: async(req, res)=>{
-        const {flightName, flightDesc, seatsAvail, flightPrice} = req.body;
-        await addFlight(flightName, flightDesc, seatsAvail, flightPrice);
+        const {flightName, flightDesc, seatsAvail, flightPrice,flightUrl,flightUrl2,flightUrl3,flightUrl4} = req.body;
+        await addFlight(flightName, flightDesc, seatsAvail, flightPrice,flightUrl,flightUrl2,flightUrl3,flightUrl4);
         res.send(await getFlights())
     },
 
@@ -22,7 +22,7 @@ export default{
     editFlight: async(req,res)=>{ 
             const [flight] = await getFlights(+req.params.id)
     
-            let {flightName, flightDesc, seatsAvail, flightPrice} = req.body
+            let {flightName, flightDesc, seatsAvail, flightPrice,flightUrl,flightUrl2,flightUrl3,flightUrl4} = req.body
     
             flightName ? flightName= flightName: {flightName}=flight
     
@@ -31,8 +31,16 @@ export default{
             seatsAvail ? seatsAvail= seatsAvail: {seatsAvail}=flight
     
             flightPrice ? flightPrice= flightPrice: {flightPrice}=flight
+
+            flightUrl ? flightUrl=flightUrl: {flightUrl}=flight
+
+            flightUrl2 ? flightUrl2=flightUrl2: {flightUrl2}=flight
+
+            flightUrl3 ? flightUrl3=flightUrl3: {flightUrl3}=flight
+
+            flightUrl4 ? flightUrl4=flightUrl4: {flightUrl4}=flight
     
-            await editFlight(flightName, flightDesc, seatsAvail, flightPrice,+req.params.id)
+            await editFlight(flightName, flightDesc, seatsAvail, flightPrice,flightUrl,flightUrl2,flightUrl3,flightUrl4,+req.params.id)
             
             res.json(await getFlights())
         }
