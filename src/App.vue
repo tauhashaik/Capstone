@@ -1,12 +1,22 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
+  <div>
+    <navbar/>
+  </div>
   <router-view/>
 </template>
 
-<style>
+<script>
+import navbar from './components/navbar.vue';
+
+export default {
+
+    components:{
+      navbar
+    }
+}
+</script>
+
+<style scoped>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
