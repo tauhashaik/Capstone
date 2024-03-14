@@ -1,13 +1,14 @@
 <template>
-  <body>
+  <body id="body">
     
   </body>
+
      <div class="card">
   <div class="card2">
     <h1 style="color: white">Hahahaha</h1>
   </div>
 </div>
- 
+
 </template>
 
 <script>
@@ -17,9 +18,7 @@ export default {
 </script>
 
 <style scoped>
-body{
-  background-color: black;
-}
+
 
   .card {
  width: 190px;
