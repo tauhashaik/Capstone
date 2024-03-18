@@ -19,10 +19,9 @@ export default{
         res.send(await deleteFlight(req.params.id))
     },
 
-    editFlight: async(req,res)=>{ 
-            const [flight] = await getFlights(+req.params.id)
-    
-            let {flightName, flightDesc, seatsAvail, flightPrice,flightUrl,flightUrl2,flightUrl3,flightUrl4} = req.body
+    updateFlight: async(req,res)=>{ 
+        const [flight] = await getFlight(+req.params.id)
+        let {flightName, flightDesc, seatsAvail, flightPrice,flightUrl,flightUrl2,flightUrl3,flightUrl4} = req.body
     
             flightName ? flightName= flightName: {flightName}=flight
     

@@ -11,7 +11,7 @@ router
 router
     .route('/:id')
         .get(controller.getFlight)
-        .patch(controller.editFlight)
+        .patch(controller.updateFlight)
         .delete(controller.deleteFlight)
 
 export default router
