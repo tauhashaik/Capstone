@@ -4,8 +4,8 @@ import AboutView from '../views/AboutView.vue'
 import HomeView from '../views/HomeView.vue'
 import FlightsAdminView from '../views/FlightsAdminView.vue'
 import UsersAdminView from '../views/UsersAdminView.vue'
-import SignupLoginView from '../views/SignupLoginView.vue'
-
+import LoginView from '../views/LoginView.vue'
+import SignUpView from '../views/SignUpView.vue'
 const routes = [
   {
     path: '/flights',
@@ -33,9 +33,14 @@ const routes = [
     component: UsersAdminView
   },
   {
-    path:'/signuplogin',
-    name:'signup/login',
-    component: SignupLoginView
+    path:'/login',
+    name:'login',
+    component: LoginView
+  },
+  {
+    path:'/signup',
+    name:'signup',
+    component: SignUpView
   }
 ]
 
