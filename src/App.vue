@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="bod">
     <navbar/>
   </div>
   <router-view/>
@@ -17,6 +17,9 @@ export default {
 </script>
 
 <style scoped>
+#bod{
+  background-color: black;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

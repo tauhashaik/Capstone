@@ -18,9 +18,13 @@
         </li>
 
         <li class="nav-item">
-          <router-link id="navI" class="nav-link active" to="/">About</router-link>
+          <router-link id="navI" class="nav-link active" to="/about">About</router-link>
         </li>
 
+        <li class="nav-item">
+          <router-link id="navI" class="nav-link active" to="/signuplogin">SIGN UP/LOGIN</router-link>
+        </li>
+        
         <li class="nav-item dropdown">
           <router-link id="navI" class="nav-link active dropdown-toggle" to="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Admin
