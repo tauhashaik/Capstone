@@ -13,21 +13,21 @@
         <h2>LOGIN</h2>
         <div class="underline-title"></div>
       </div>
-      <form method="post" class="form">
+      <form  class="form" @submit.prevent>
         <label for="user-email" style="padding-top:13px">
             &nbsp;Email
           </label>
-        <input id="user-email" class="form-content" type="email" name="email" autocomplete="on" required />
+        <input id="user-email" class="form-content" type="email" name="email" autocomplete="on" v-model="emailAdd" required />
         <div class="form-border"></div>
         <label for="user-password" style="padding-top:22px">&nbsp;Password
           </label>
-        <input id="user-password" class="form-content" type="password" name="password" required />
+        <input id="user-password" class="form-content" type="password" name="password" v-model="userPass" required />
         <div class="form-border"></div>
-        <a href="#">
+        <router-link to="/signup">
           <legend id="forgot-pass">Forgot password?</legend>
-        </a>
-        <input id="submit-btn" type="submit" name="submit" value="LOGIN" />
-        <a href="#" id="signup">Don't have account yet?</a>
+        </router-link>
+        <input id="submit-btn" type="submit" name="submit" @click="loginUser()" value="LOGIN"/>
+        <router-link to="/signup" id="signup">Don't have account yet?</router-link>
       </form>
     </div>
   </div>
@@ -35,17 +35,32 @@
 </template>
 <script>
 export default {
+  data(){
+    return{
+      emailAdd: '',
+      userPass: ''
+    }
+  },
+  methods:{
+    loginUser(){
+      this.$store.dispatch('login',this.$data)
+    }
+  }
     
 }
 </script>
-<style>
+<style scoped>
 a {
   text-decoration: none;
+}
+h2{
+  color: rgb(8, 196, 253);
 }
 body {
   background: -webkit-linear-gradient(bottom, rgb(8, 196, 253), black);
   background-repeat: no-repeat;
  height: 100vh;
+ padding-top: 2px;
 }
 label {
   font-family: "Raleway", sans-serif; 

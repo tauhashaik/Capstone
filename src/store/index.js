@@ -3,13 +3,21 @@ import axios from 'axios'
 let baseUrl = 'https://capstone-nmkq.onrender.com'
 export default createStore({
   state: {
-    Flights:[]
+    Flights:[],
+    Users:[],
+    login: false
   },
   getters: {
   },
   mutations: {
     setFlights(state,data){
       state.Flights=data
+    },
+    setUsers(state,data){
+      state.Users=data
+    },
+    setLogin(state,data){
+      state.login = data
     }
   },
   actions: {
@@ -77,9 +85,9 @@ export default createStore({
         console.error('cannot add user ',error)
       }
     },
-    async deleteUser({commit}){
+    async deleteUser({commit},userID){
       try{
-        await axios.delete(baseUrl+'/users/'+id)
+        await axios.delete(baseUrl+'/users/'+userID)
         window.location.reload()
       }catch(error){
         console.error('cannot delete user because it doesnt exist', error)
@@ -92,6 +100,25 @@ export default createStore({
       }catch(error){
         console.error('cannot update user because it doesnt exist', error);
       }
+    },
+    async login({commit},user){
+      let {data} = await axios.post(baseUrl+'/login',user);
+      if(data.token !== undefined){
+        $cookies.set("jwt", data.token);
+        let[{userRole}] = data.user;
+        $cookies.set("userRole", userRole);
+        let[{user}] = data.user;
+        $cookies.set("user", user);
+        alert(data.msg);
+        await router.push("/");
+      }else{
+        alert(data.msg);
+        $cookies.remove("jwt")
+        $cookies.remove("user")
+        $cookies.remove("userRole")
+      }
+      commit("setLogin",true);
+      window.location.reload()
     }
 
   },
