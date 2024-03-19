@@ -22,11 +22,15 @@
         </li>
 
         <li class="nav-item">
-          <router-link id="navI" class="nav-link active" to="/login">LOGIN</router-link>
+          <router-link v-if="!$cookies.get('jwt')" id="navI" class="nav-link active" to="/login">LOGIN</router-link>
         </li>
 
         <li class="nav-item">
-          <router-link id="navI" class="nav-link active" to="/signup">SIGN UP</router-link>
+          <router-link v-if="!$cookies.get('jwt')" id="navI" class="nav-link active" to="/signup">SIGN UP</router-link>
+        </li>
+
+        <li class="nav-item">
+          <router-link @click="logout()" v-if="$cookies.get('jwt')" id="navI" class="nav-link active" to="/">LOGOUT</router-link>
         </li>
         
         <li class="nav-item dropdown">
@@ -48,6 +52,12 @@
 </template>
 <script>
 export default {
+
+  computed:{
+    logout(){
+      this.$store.dispatch('logout')
+    }
+  }
     
 }
 </script>

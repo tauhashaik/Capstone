@@ -23,7 +23,7 @@
                 <td style="color: rgb(8, 196, 253); background-color: white; font-size: 20px; padding-top: 40px">{{item.firstName}}</td>
                 <td style="color: rgb(8, 196, 253); background-color: white; font-size: 20px; padding-top: 40px">{{item.lastName}}</td>
                 <td style="color: rgb(8, 196, 253); background-color: white; font-size: 20px; padding-top: 40px">{{item.userRole}}</td>
-                <td style="color: rgb(8, 196, 253); background-color: white; font-size: 20px; padding-top: 40px">R{{item.emailAdd}}</td>
+                <td style="color: rgb(8, 196, 253); background-color: white; font-size: 20px; padding-top: 40px">{{item.emailAdd}}</td>
                 <td><button @click="deleteUser(item.userID)" id="deleteButt">Delete</button></td>
 
                 <td>

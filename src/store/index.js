@@ -1,6 +1,8 @@
 import { createStore } from 'vuex'
 import axios from 'axios'
-let baseUrl = 'https://capstone-nmkq.onrender.com'
+import router from '@/router'
+let baseUrl = 'http://localhost:8050'
+// let baseUrl = 'https://capstone-nmkq.onrender.com'
 export default createStore({
   state: {
     Flights:[],
@@ -103,12 +105,13 @@ export default createStore({
     },
     async login({commit},user){
       let {data} = await axios.post(baseUrl+'/login',user);
+      console.log(data);
       if(data.token !== undefined){
-        $cookies.set("jwt", data.token);
+        $cookies.set("jwt", data.token);//
         let[{userRole}] = data.user;
         $cookies.set("userRole", userRole);
-        let[{user}] = data.user;
-        $cookies.set("user", user);
+        // let[{user}] = data.user;
+        // $cookies.set("user", user);
         alert(data.msg);
         await router.push("/");
       }else{
@@ -119,8 +122,17 @@ export default createStore({
       }
       commit("setLogin",true);
       window.location.reload()
+    },
+    async logout(context){
+      $cookies.remove("jwt");
+      // let cookies = $cookies.key();
+      // console.log(cookies);
+      $cookies.remove("jwt");
+      $cookies.remove("userRole");
+      $cookies.remove("user");
+      window.location.reload()
+      alert("you have logged out")
     }
-
   },
     modules: {
     }
