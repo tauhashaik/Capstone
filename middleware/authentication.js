@@ -1,12 +1,13 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken'
 import cookieParser from 'cookie-parser'
-import {verifyPass} from '../models/users-database.js'
+import {verifyPass, getUserRole} from '../models/users-database.js'
 
 
 const auth = async(req,res,next)=>{
     const {userPass, emailAdd}= req.body
     const hashedPass = await verifyPass(emailAdd)
+    let userRole = await getUserRole(emailAdd)
     bcrypt.compare(userPass, hashedPass, (err,result)=>{
         if(err) throw err
         if(result===true){
@@ -19,7 +20,9 @@ const auth = async(req,res,next)=>{
 
                 // sends this response back to the user.
                 res.send({
-                    msg: "You have sucessfully signed in"
+                    token:token,
+                    msg: "You have sucessfully signed in",
+                    user: userRole
                 })
                 next()
         }else{
