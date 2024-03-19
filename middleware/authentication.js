@@ -8,7 +8,9 @@ const auth = async(req,res,next)=>{
     const {userPass, emailAdd}= req.body
     const hashedPass = await verifyPass(emailAdd)
     let userRole = await getUserRole(emailAdd)
+    console.log(userRole);
     bcrypt.compare(userPass, hashedPass, (err,result)=>{
+        console.log(userRole);
         if(err) throw err
         if(result===true){
             const {emailAdd} = req.body

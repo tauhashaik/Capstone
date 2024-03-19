@@ -65,9 +65,10 @@ const verifyPass = async(emailAdd)=>{
 
 const getUserRole = async(emailAdd)=>{
     const [result]= await pool.query(`
-    SELECT userPass FROM Users
+    SELECT * FROM Users
     WHERE emailAdd = ?
     `,[emailAdd])
+    return result
 }
 
 // exporting all queries to be imported and used in other files.
