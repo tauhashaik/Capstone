@@ -62,7 +62,7 @@ export default {
       let item = this.$store.state.Flights
       let typed = this.search;
       let result = item.filter(s => {
-        return s.flightName.toLowerCase().includes(typed.toLowerCase())
+        return s.flightDesc.toLowerCase().includes(typed.toLowerCase())
       });
       return result;
     },
@@ -73,7 +73,9 @@ export default {
       }
     }
   },
-
+  mounted(){
+    this.$store.dispatch('getFlights');
+  }
 }
 </script>
 
@@ -133,9 +135,9 @@ export default {
   padding: 20px;
 }
 
-#butt2{
+#butt:hover{
   background-color: indigo;
-  color: rgb(255, 255, 255);
+  color: black;
 }
 
 #bodd{

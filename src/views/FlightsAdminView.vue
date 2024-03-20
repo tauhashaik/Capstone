@@ -168,9 +168,6 @@ export default {
         getFlights(){
             this.$store.dispatch('getFlights')
          }
-    },
-    mounted(){
-        this.getFlights
     }
 }
 </script>

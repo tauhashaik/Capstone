@@ -14,24 +14,24 @@
         <div class="underline-title"></div>
       </div>
       <form  class="form" @submit.prevent>
-        <label for="user-email" style="padding-top:22px; color: rgb(8, 196, 253);">
+        <label for="user-first-name" style="padding-top:22px; color: rgb(8, 196, 253);">
             &nbsp;First Name
           </label>
-        <input id="user-email" class="form-content" type="email" name="email" autocomplete="on" v-model="firstName" required />
+        <input id="user-first-name" class="form-content" type="text" name="email" autocomplete="on" v-model="firstName" required />
         <div class="form-border"></div>
-        <label for="user-password" style="padding-top:22px; color: rgb(8, 196, 253);">&nbsp;Last Name
+        <label for="user-last-name" style="padding-top:22px; color: rgb(8, 196, 253);">&nbsp;Last Name
           </label>
-        <input id="user-password" class="form-content" type="password" name="password" v-model="lastName" required />
+        <input id="user-last-name" class="form-content" type="text" name="password" v-model="lastName" required />
         <div class="form-border"></div>
-        <label for="user-password" style="padding-top:22px; color: rgb(8, 196, 253);">&nbsp;Email Address
+        <label for="user-email" style="padding-top:22px; color: rgb(8, 196, 253);">&nbsp;Email Address
           </label>
-        <input id="user-password" class="form-content" type="password" name="password" v-model="emailAdd" required />
+        <input id="user-email" class="form-content" type="text" name="password" v-model="emailAdd" required />
         <div class="form-border"></div>
         <label for="user-password" style="padding-top:22px; color: rgb(8, 196, 253);">&nbsp;Password
           </label>
         <input id="user-password" class="form-content" type="password" name="password" v-model="userPass" required />
         <div class="form-border"></div>
-        <input id="submit-btn" type="submit" name="submit" @click="" value="SIGNUP"/>
+        <input id="submit-btn" type="submit" name="submit" @click="addUser()" value="SIGNUP"/>
         <router-link to="/login" id="signup">Already have an account? Login here.</router-link>
       </form>
     </div>
@@ -45,6 +45,7 @@ export default {
      firstName:"",
      lastName:"",
      emailAdd:"",
+     userRole:"user",
      userPass:""
     }
   },

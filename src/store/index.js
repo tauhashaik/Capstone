@@ -79,9 +79,11 @@ export default createStore({
       console.error('error fetching user because the user does not exist',error)
   }
   },
-  async addUser({commit}){
+  async addUser({commit},newUser){
       try{
-        const {data} = await axios.post(baseUrl+'/users',newUser)
+        const {data} = await axios.post(baseUrl+'/users',newUser);
+        commit("setLogin",true);
+        await router.push('/')
         window.location.reload()
       }catch(error){
         console.error('cannot add user ',error)

@@ -30,10 +30,14 @@
         </li>
 
         <li class="nav-item">
-          <router-link @click="logout()" v-if="$cookies.get('jwt')" id="navI" class="nav-link active" to="/">LOGOUT</router-link>
+          <router-link v-if="$cookies.get('jwt')" id="navI" class="nav-link active" to="/" @click="logout()">LOGOUT</router-link>
         </li>
         
-        <li class="nav-item dropdown">
+        <li class="nav-item">
+          <router-link v-if="$cookies.get('jwt')" id="navI" class="nav-link active" to="/cart"><i class="fa-solid fa-cart-shopping"></i></router-link>
+        </li>
+        
+        <li class="nav-item dropdown" v-if="isAdmin">
           <router-link id="navI" class="nav-link active dropdown-toggle" to="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Admin
           </router-link>
@@ -54,6 +58,13 @@
 export default {
 
   computed:{
+    isAdmin() {
+        const jwt = $cookies.get('jwt');
+        const userRole = $cookies.get('userRole');
+        return jwt && userRole === 'admin';
+    }
+  },
+  methods:{
     logout(){
       this.$store.dispatch('logout')
     }

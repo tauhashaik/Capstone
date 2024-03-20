@@ -6,6 +6,7 @@ import FlightsAdminView from '../views/FlightsAdminView.vue'
 import UsersAdminView from '../views/UsersAdminView.vue'
 import LoginView from '../views/LoginView.vue'
 import SignUpView from '../views/SignUpView.vue'
+import CartView from '../views/CartView.vue'
 const routes = [
   {
     path: '/flights',
@@ -41,6 +42,11 @@ const routes = [
     path:'/signup',
     name:'signup',
     component: SignUpView
+  },
+  {
+    path:'/cart',
+    name:'cart',
+    component: CartView
   }
 ]
 
