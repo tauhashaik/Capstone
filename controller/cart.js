@@ -1,6 +1,7 @@
 import {addToCart, getUserCart, updateCartQuantity, deleteFromCart,clearUserCart} from '../models/cart-database'
 
 export default{
+    
     addToCart: async (req, res)=>{
         try{
             const { userID, flightID, quantity} = req.body;

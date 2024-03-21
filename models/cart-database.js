@@ -90,6 +90,6 @@ const clearUserCart = async(userID)=>{
     }catch(error){
         throw error
     }
-}
+};
 
 export{addToCart, getUserCart, updateCartQuantity, deleteFromCart,clearUserCart}
