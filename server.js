@@ -17,7 +17,7 @@ const app=express()
 
 app.use(cors({
     credentials: true,
-    origin: 'capstone-project-4153c.firebaseapp.com'
+    origin: 'https://capstone-project-4153c.firebaseapp.com'
 }))
 
 app.use(express.json())
