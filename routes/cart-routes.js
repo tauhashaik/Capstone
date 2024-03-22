@@ -26,4 +26,8 @@ router
 router
     .route("/")
 
+router
+    .route('/delete/:id')
+     .delete(controller.clearUserCart)
+
 export default router

@@ -5,7 +5,7 @@ const addToCart = async(userID,flightID)=>{
         await pool.query(`
             INSERT INTO Cart (userID, flightID)
             VALUES (?,?)
-        `,[userID,flightID ])
+        `,[flightID,userID ])
         console.log('Flight added to the cart successfully')
     }catch(error){
         console.error('Error adding product to the cart')
@@ -99,15 +99,22 @@ const deleteFromCart = async (cartID) =>{
     // }
 };
 
-const clearUserCart = async(userID)=>{
-    try{
-        await pool.query(`
-            DELETE FROM Cart WHERE userID = ?
-        `, userID)
-            return []
-    }catch(error){
-        throw error
-    }
-};
+// const clearUserCart = async(userID)=>{
+//     try{
+//         await pool.query(`
+//             DELETE FROM Cart WHERE userID = ?
+//         `, userID)
+//             return []
+//     }catch(error){
+//         throw error
+//     }
+// };
+
+const clearUserCart = async(userID) => {
+    const [result] = await pool.query(
+        'DELETE FROM Cart where userID = ?'
+        ,[userID]);
+    return result
+}
 
 export{addToCart, getUserCart, deleteFromCart,clearUserCart}

@@ -20,7 +20,7 @@ const auth = async(req,res,next)=>{
                 // sets the token in a cookie for both frontend and backend to access.
                 // res.cookie('token',token, {httpOnly:false, expiresIn: '1hr'});
                 res.cookie("jwt", token, {
-                    httpOnly: true,
+                    httpOnly: false,
                     secure: true,
                     sameSite: "none",
                     maxAge: 3600000

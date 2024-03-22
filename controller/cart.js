@@ -32,14 +32,25 @@ export default{
         // }
     },
 
+    // clearUserCart: async (req, res) => {
+    //     try {
+    //         const {userID} = req.params;
+    //         await clearUserCart(userID);
+    //         res.json({message: 'Cart cleared successfully'});
+    //     } catch (error) {
+    //         console.error('Error in clearing the users cart:', error);
+    //         res.status(500).json({ error: 'Unable to clear the users cart'});
+    //     }
+    // }
     clearUserCart: async (req, res) => {
-        try {
-            const {userID} = req.params;
-            await clearUserCart(userID);
-            res.json({message: 'Cart cleared successfully'});
-        } catch (error) {
-            console.error('Error in clearing the users cart:', error);
-            res.status(500).json({ error: 'Unable to clear the users cart'});
-        }
-    }
+      try {
+              const  id = req.params.id
+              await clearUserCart(+id);
+              res.send(await getUserCart());
+      } catch (error) {
+          console.error('Error in clearing the users cart:', error);
+          res.status(500).json({ error: 'Unable to clear the users cart'});
+      }
+  }
+
 }
