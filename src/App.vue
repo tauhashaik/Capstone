@@ -1,19 +1,35 @@
 <template>
-  <div id="bod">
-    <navbar/>
+  <div id="app">
+    <!-- <video-comp v-if="showIntro"></video-comp> -->
+    <div>
+      <div id="bod">
+        <navbar/>
+      </div>
+      <router-view/>
+    </div>
   </div>
-  <router-view/>
 </template>
 
 <script>
 import navbar from './components/navbar.vue';
+// import videoComp from './components/videoComp.vue';
 
 export default {
-
-    components:{
-      navbar
-    }
-}
+  components: {
+    navbar,
+    // videoComp
+  },
+  data() {
+    return {
+      showIntro: true
+    };
+  },
+  mounted() {
+    // setTimeout(() => {
+    //   this.showIntro = false;
+    // }, 15000);
+  }
+};
 </script>
 
 <style scoped>

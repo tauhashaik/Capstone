@@ -2,7 +2,7 @@
     <nav id="box" class="navbar navbar-expand-lg">
   <div class="container-fluid">
 <a class="navbar-brand" href="/"><img id="Logo" src="https://i.ibb.co/WzbXx0k/LOGO.png"></a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <button id="dropButt" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
@@ -30,7 +30,7 @@
         </li>
 
         <li class="nav-item">
-          <router-link v-if="$cookies.get('jwt')" id="navI" class="nav-link active" to="/" @click="logout()">LOGOUT</router-link>
+          <router-link v-if="$cookies.get('jwt')" id="navI" class="nav-link active" to="/" @click="logout()"><i class="fa-solid fa-arrow-right-from-bracket"></i></router-link>
         </li>
         
         <li class="nav-item">
@@ -73,6 +73,16 @@ export default {
 }
 </script>
 <style scoped>
+#dropButt{
+  border-color:rgb(0, 187, 229); 
+}
+
+#dropButt:hover{
+  border-color:rgb(0, 187, 229); 
+  transform: scale(1.3);
+  transition: 0.4s;
+}
+
 #Logo{
     width: 100px;
     height: 80px;

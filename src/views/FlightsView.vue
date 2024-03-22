@@ -1,6 +1,11 @@
 <template>
   <body id="body">
-    <center><input id="input" type="Search" placeholder="search..." aria-label="search" v-model="search">
+    <center>
+      <form>
+	      <label for="search">Search</label>
+	      <input required="" pattern=".*\S.*" type="search" class="input" v-model="search" id="search">
+	      <span class="caret"></span>
+      </form>
       <br>
       <button id="funcButt" @click="explore()">Search</button>
       <button id="funcButt" @click="sort()">SORT</button>
@@ -16,7 +21,8 @@
             <h5 class="card-title" style="color: white; background-color: black;">{{item.flightName}}</h5>
             <p class="card-text" style="font-size: 17px; font-weight: bolder;"><i>R{{item.flightPrice}}</i></p>
             <p class="card-text" style="font-size: 17px;">Seats Available:{{item.seatsAvail}}</p>
-            <button id="butt" class="btn btn-primary">BOOK NOW</button>
+            <button id="butt"  @click="addToCart(item.flightID,$cookies.get('userID'))" class="btn btn-primary">BOOK NOW</button>
+            <router-link @click="getFlight(item.flightID)" :to="{name:'flight', params:{flightID: item.flightID}}" class="btn" id="butt">View More</router-link>
           </div>
         </div>    
       </div>
@@ -58,6 +64,16 @@ export default {
     };
   },
   methods: {
+    addToCart(flightID){
+      const userID = $cookies.get('userID')
+      this.$store.dispatch('addToCart',{flightID,userID})
+      alert('Add to cart') 
+    },
+
+    getFlight(flightID){
+      this.$store.dispatch('getSingleFlight',flightID)
+    },
+
     explore(){
       let item = this.$store.state.Flights
       let typed = this.search;
@@ -205,5 +221,140 @@ footer {
 #adminButt {
   background-color: black;
   color: gold;
+}
+
+
+/* Search */
+.input {
+  color: rgb(0, 187, 229);
+  font: 1em/1.5 Hind, sans-serif;
+}
+
+form, .input, .caret {
+  margin: auto;
+}
+
+form {
+  position: relative;
+  width: 100%;
+  max-width: 17em;
+}
+
+.input, .caret {
+  display: block;
+  transition: all calc(1s * 0.5) linear;
+}
+
+.input {
+  background: transparent;
+  border-radius: 50%;
+  box-shadow: 0 0 0 0.25em inset;
+  caret-color: Black;
+  width: 2em;
+  height: 2em;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.input:focus, .input:valid {
+  background: rgb(255, 255, 255);
+  border-radius: 0.25em;
+  box-shadow: none;
+  padding: 0.75em 1em;
+  transition-duration: calc(1s * 0.25);
+  transition-delay: calc(1s * 0.25);
+  width: 100%;
+  height: 3em;
+}
+
+.input:focus {
+  animation: showCaret 1s steps(1);
+  outline: transparent;
+}
+
+.input:focus + .caret, .input:valid + .caret {
+  animation: handleToCaret 1s linear;
+  background: transparent;
+  width: 1px;
+  height: 1.5em;
+  transform: translate(0,-1em) rotate(-180deg) translate(7.5em,-0.25em);
+}
+
+.input::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+label {
+  color: #e3e4e8;
+  overflow: hidden;
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+.caret {
+  background: rgb(0, 187, 229);
+  border-radius: 0 0 0.125em 0.125em;
+  margin-bottom: -0.6em;
+  width: 0.25em;
+  height: 1em;
+  transform: translate(0,-1em) rotate(-45deg) translate(0,0.875em);
+  transform-origin: 50% 0;
+}
+
+/* Animations */
+@keyframes showCaret {
+  from {
+    caret-color: transparent;
+  }
+
+  to {
+    caret-color: #255ff4;
+  }
+}
+
+@keyframes handleToCaret {
+  from {
+    background: currentColor;
+    width: 0.25em;
+    height: 1em;
+    transform: translate(0,-1em) rotate(-45deg) translate(0,0.875em);
+  }
+
+  25% {
+    background: currentColor;
+    width: 0.25em;
+    height: 1em;
+    transform: translate(0,-1em) rotate(-180deg) translate(0,0.875em);
+  }
+
+  50%, 62.5% {
+    background: #255ff4;
+    width: 1px;
+    height: 1.5em;
+    transform: translate(0,-1em) rotate(-180deg) translate(7.5em,2.5em);
+  }
+
+  75%, 99% {
+    background: #255ff4;
+    width: 1px;
+    height: 1.5em;
+    transform: translate(0,-1em) rotate(-180deg) translate(7.5em,-0.25em);
+  }
+
+  87.5% {
+    background: #255ff4;
+    width: 1px;
+    height: 1.5em;
+    transform: translate(0,-1em) rotate(-180deg) translate(7.5em,0.125em);
+  }
+
+  to {
+    background: transparent;
+    width: 1px;
+    height: 1.5em;
+    transform: translate(0,-1em) rotate(-180deg) translate(7.5em,-0.25em);
+  }
 }
 </style>

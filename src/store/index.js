@@ -7,7 +7,10 @@ export default createStore({
   state: {
     Flights:[],
     Users:[],
-    login: false
+    singleFlight:[],
+    cart:[],
+    login: false,
+    
   },
   getters: {
   },
@@ -20,9 +23,18 @@ export default createStore({
     },
     setLogin(state,data){
       state.login = data
-    }
+    },
+    setSingleFlight(state,data){
+      state.singleFlight = data
+    },
+    setCart(state, data) {
+      state.cart=data;
+    },
+
   },
   actions: {
+
+    // ALL FLIGHT RELATED
     async getFlights({commit}){
       try{
         const{data} = await axios.get(baseUrl+'/flights')
@@ -38,7 +50,14 @@ export default createStore({
       }catch(error){
         console.error('error fetching flight',error)
     }
-  },  
+  }, 
+
+  async getSingleFlight({commit},flightID){
+    let {data} = await axios.get(baseUrl+ '/flights/'+flightID)
+    console.log(data)
+    commit("setSingleFlight",data)
+  },
+
   async addFlight({commit},newFlight){
     try{
       const {data} = await axios.post(baseUrl+'/flights',newFlight)
@@ -64,6 +83,7 @@ export default createStore({
     }
   },
 
+  // ALL USER RELATED
   async getUsers({commit}){
     try{
       const{data} = await axios.get(baseUrl+'/users')
@@ -72,7 +92,7 @@ export default createStore({
       console.error('error fetching users because they dont exist',error)
     }
   },
-  async getUser({commit}){
+  async getUser({commit},id){
     try{
       await axios.get(baseUrl+'/users/'+id)
     }catch(error){
@@ -105,15 +125,19 @@ export default createStore({
         console.error('cannot update user because it doesnt exist', error);
       }
     },
+
+    // LOGIN AND LOGOUT
     async login({commit},user){
       let {data} = await axios.post(baseUrl+'/login',user);
       console.log(data);
       if(data.token !== undefined){
-        $cookies.set("jwt", data.token);//
+        $cookies.set("jwt", data.token);
         let[{userRole}] = data.user;
         $cookies.set("userRole", userRole);
-        // let[{user}] = data.user;
-        // $cookies.set("user", user);
+        let[{userID}] = data.user;
+        $cookies.set("userID", userID);
+        let[user] = data.user;
+        $cookies.set("user", user);
         alert(data.msg);
         await router.push("/");
       }else{
@@ -130,11 +154,60 @@ export default createStore({
       // let cookies = $cookies.key();
       // console.log(cookies);
       $cookies.remove("jwt");
+      $cookies.remove("userID");
       $cookies.remove("userRole");
       $cookies.remove("user");
       window.location.reload()
       alert("you have logged out")
-    }
+    },
+    
+    // CART
+    async addToCart({commit},payload) {
+
+      let {data}= await axios.post(`${baseUrl}/cart/${payload.flightID}?users=${payload.userID}`
+      );
+      console.log(data)
+      window.location.reload()
+    },
+
+    async getUserCart({commit},userID){
+      try{
+      await axios.get(baseUrl+'/users/'+userID)
+      }catch(error){
+       console.error("Error in getting users cart",error) 
+      }
+    },
+
+    // async getUserCart({commit},userID) {
+    //   try {
+    //     const response = await axios.get(`/cart/${userID}`);
+    //     commit('setUserCart', response.data);
+    //   } catch (error) {
+    //     console.error('Error in getting the users cart:', error);
+    //   }
+    // },
+    
+    async deleteFromCart({commit},{ userID,flightID}) {
+      try {
+        if (cartID === undefined || cartID === null){
+          throw new Error ("Invalid cartID")
+        }
+        await axios.delete(baseUrl + "/cart/"+ cartID)
+        window.location.reload();
+      }catch (error) {
+        console.error('Error in deleting the item from the users cart:', error);
+      }
+    },
+
+    async clearUserCart({commit},userID) {
+      try {
+        await axios.delete(`/cart/${userID}/clear`);
+        commit('clearCart');
+      } catch (error) {
+        console.error('Error clearing the users cart:', error);
+      }
+    },
+
   },
     modules: {
     }
