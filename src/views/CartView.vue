@@ -36,7 +36,7 @@ methods:{
 },
 
 mounted(){
-    this.getUserCart
+    this.getUserCart()
 
 }
     

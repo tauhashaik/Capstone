@@ -4,8 +4,10 @@ import AboutView from '../views/AboutView.vue'
 import HomeView from '../views/HomeView.vue'
 import FlightsAdminView from '../views/FlightsAdminView.vue'
 import UsersAdminView from '../views/UsersAdminView.vue'
+import ProfileView from '../views/ProfileView.vue'
 import LoginView from '../views/LoginView.vue'
 import SignUpView from '../views/SignUpView.vue'
+import ContactView from '../views/ContactView.vue'
 import CartView from '../views/CartView.vue'
 import SingleFlightView from '../views/SingleFlightView.vue'
 const routes = [
@@ -43,6 +45,16 @@ const routes = [
     path:'/signup',
     name:'signup',
     component: SignUpView
+  },
+  {
+    path:'/contact',
+    name:'contact',
+    component: ContactView
+  },
+  {
+    path:'/profile',
+    name:'profile',
+    component:ProfileView
   },
   {
     path:'/cart',

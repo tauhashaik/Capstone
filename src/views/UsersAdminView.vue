@@ -24,6 +24,7 @@
                 <td style="color: rgb(8, 196, 253); background-color: white; font-size: 20px; padding-top: 40px">{{item.lastName}}</td>
                 <td style="color: rgb(8, 196, 253); background-color: white; font-size: 20px; padding-top: 40px">{{item.userRole}}</td>
                 <td style="color: rgb(8, 196, 253); background-color: white; font-size: 20px; padding-top: 40px">{{item.emailAdd}}</td>
+                <td style="color: rgb(8, 196, 253); background-color: white; font-size: 20px; padding-top: 40px">{{item.userPass}}</td>
                 <td><button @click="deleteUser(item.userID)" id="deleteButt">Delete</button></td>
 
                 <td>
@@ -41,16 +42,16 @@
                     <div class="modal-body">
 
                         <p id= "modalP">First Name</p>
-                        <input id="input1" placeholder="prodName" type="text" class="form-control" v-model="firstName" required>
+                        <input id="input1" placeholder="First Name" type="text" class="form-control" v-model="firstName" required>
 
                         <p id= "modalP">Last Name</p>
-                        <input id="input2" placeholder="quantity" type="text" class="form-control" v-model="lastName" required>
+                        <input id="input2" placeholder="Last Name" type="text" class="form-control" v-model="lastName" required>
 
                         <p id= "modalP">UserRole</p>
-                        <input id="input3" placeholder="amount" type="number" class="form-control" v-model="userRole" required>
+                        <input id="input3" placeholder="User Role" type="number" class="form-control" v-model="userRole" required>
 
                         <p id= "modalP">Email Address</p>
-                        <input id="input4" placeholder="category" type="number" class="form-control" v-model="emailAdd" required>
+                        <input id="input4" placeholder="Email Address" type="number" class="form-control" v-model="emailAdd" required>
                     </div>
                     <div class="modal-footer">
                         <button id="closeButt" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

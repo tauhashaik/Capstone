@@ -66,6 +66,7 @@ export default {
   methods: {
     addToCart(flightID){
       const userID = $cookies.get('userID')
+      console.log($cookies.get('userID'));
       this.$store.dispatch('addToCart',{flightID,userID})
       alert('Add to cart') 
     },

@@ -10,7 +10,7 @@ export default createStore({
     singleFlight:[],
     cart:[],
     login: false,
-    
+    singleUser:[]
   },
   getters: {
   },
@@ -27,6 +27,11 @@ export default createStore({
     setSingleFlight(state,data){
       state.singleFlight = data
     },
+
+    setSingleUser(state,data){
+      state.singleUser= data
+    },
+
     setCart(state, data) {
       state.cart=data;
     },
@@ -92,9 +97,11 @@ export default createStore({
       console.error('error fetching users because they dont exist',error)
     }
   },
-  async getUser({commit},id){
+  async getUser({commit},userID){
     try{
-      await axios.get(baseUrl+'/users/'+id)
+      let {data} = await axios.get(baseUrl+'/users/'+userID)
+      console.log(data)
+      commit("setSingleUser", data)
     }catch(error){
       console.error('error fetching user because the user does not exist',error)
   }
@@ -118,12 +125,8 @@ export default createStore({
       }
     },
     async editUser({commit},update){
-      try{
-        await axios.patch(baseUrl+'/users/'+update.id,update)
+        await axios.patch(baseUrl+'/users/'+update.userID,update)
         window.location.reload()
-      }catch(error){
-        console.error('cannot update user because it doesnt exist', error);
-      }
     },
 
     // LOGIN AND LOGOUT
@@ -164,15 +167,15 @@ export default createStore({
     // CART
     async addToCart({commit},payload) {
 
-      let {data}= await axios.post(`${baseUrl}/cart/${payload.flightID}?users=${payload.userID}`
-      );
+      let {data}= await axios.post(`${baseUrl}/cart/${payload.flightID}?users=${payload.userID}`);
       console.log(data)
       window.location.reload()
     },
 
     async getUserCart({commit},userID){
       try{
-      await axios.get(baseUrl+'/users/'+userID)
+       const response= await axios.get(baseUrl+'/cart/'+userID);
+        commit('setCart', response.data)
       }catch(error){
        console.error("Error in getting users cart",error) 
       }
@@ -187,12 +190,12 @@ export default createStore({
     //   }
     // },
     
-    async deleteFromCart({commit},{ userID,flightID}) {
+    async deleteFromCart({commit},cartID) {
       try {
         if (cartID === undefined || cartID === null){
           throw new Error ("Invalid cartID")
         }
-        await axios.delete(baseUrl + "/cart/"+ cartID)
+        await axios.delete(baseUrl+"/cart/"+cartID)
         window.location.reload();
       }catch (error) {
         console.error('Error in deleting the item from the users cart:', error);
@@ -200,12 +203,7 @@ export default createStore({
     },
 
     async clearUserCart({commit},userID) {
-      try {
-        await axios.delete(`/cart/${userID}/clear`);
-        commit('clearCart');
-      } catch (error) {
-        console.error('Error clearing the users cart:', error);
-      }
+      await axios.delete(baseUrl+"/delete/"+userID)
     },
 
   },
