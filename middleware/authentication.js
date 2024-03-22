@@ -18,8 +18,14 @@ const auth = async(req,res,next)=>{
                 process.env.SECRET_KEY,{expiresIn: '1hr'});
 
                 // sets the token in a cookie for both frontend and backend to access.
-                res.cookie('token',token, {httpOnly:false, expiresIn: '1hr'});
+                // res.cookie('token',token, {httpOnly:false, expiresIn: '1hr'});
+                res.cookie("jwt", token, {
+                    httpOnly: true,
+                    secure: true,
+                    sameSite: "none",
+                    maxAge: 3600000
 
+                })
                 // sends this response back to the user.
                 res.send({
                     token:token,
@@ -31,18 +37,49 @@ const auth = async(req,res,next)=>{
             res.send({msg:"The email address or password is incorrect"})
         }
     })
+};
+
+// const authenticate = (req,res,next) =>{
+//     let {cookie}= req.headers
+//     let tokenInHeader=cookie && cookie.split('=')[1]
+//     if (tokenInHeader===null)res.sendStatus(401)
+//     jwt.verify(tokenInHeader,process.env.SECRET_KEY,
+//     (err,emailAdd)=>{
+//         if(err) return res.sendStatus(403)
+//         req.emailAdd=emailAdd
+//         next()
+//     } )
+// }
+
+const authenticate = (req, res, next)=>{
+    const userID = req.cookies.userID;
+
+    if(!userID){
+        return res.sendStatus(403);
+    }
+    req.userID = userID
+
+    next();
 }
 
-const authenticate = (req,res,next) =>{
-    let {cookie}= req.headers
-    let tokenInHeader=cookie && cookie.split('=')[1]
-    if (tokenInHeader===null)res.sendStatus(401)
-    jwt.verify(tokenInHeader,process.env.SECRET_KEY,
-    (err,emailAdd)=>{
-        if(err) return res.sendStatus(403)
-        req.emailAdd=emailAdd
-        next()
-    } )
-}
+// const authenticate = async (req, res, next) => {
+//     try {
+//         const token = req.cookies.token;
+//         console.log('Request headers:', req.headers);
+
+//         if (!token) {
+//             throw new Error('Token not found in cookie');
+//         }
+
+//         const decodedToken = jwt.verify(token, process.env.SECRET_KEY);
+        
+//         req.emailAdd = decodedToken.emailAdd;
+
+//         next();
+//     } catch (error) {
+//         console.error('Authentication error:', error);
+//         return res.status(401).json({ error: 'Unauthorized' });
+//     }
+// }
 
 export {auth, authenticate}

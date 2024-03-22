@@ -32,7 +32,7 @@ app.use('/users', usersRouter)
 
 app.use('/login',auth, loginRouter)
 
-app.use('/cart',authenticate, cartRouter)
+app.use('/cart',cartRouter)
 
 app.listen (PORT,()=>{
     console.log(`this is listening on http://localhost:${PORT}`)
