@@ -1,8 +1,8 @@
 import { createStore } from 'vuex'
 import axios from 'axios'
 import router from '@/router'
-let baseUrl = 'http://localhost:8050'
-// let baseUrl = 'https://capstone-nmkq.onrender.com'
+// let baseUrl = 'http://localhost:8050'
+let baseUrl = 'https://capstone-nmkq.onrender.com'
 export default createStore({
   state: {
     Flights:[],
