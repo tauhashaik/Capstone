@@ -2,12 +2,13 @@
   <body id="body">
     <center>
       <form>
+        <br>
+        <br>
 	      <label for="search">Search</label>
 	      <input required="" pattern=".*\S.*" type="search" class="input" v-model="search" id="search">
 	      <span class="caret"></span>
       </form>
       <br>
-      <button id="funcButt" @click="explore()">Search</button>
       <button id="funcButt" @click="sort()">SORT</button>
   </center>
     
@@ -21,8 +22,8 @@
             <h5 class="card-title" style="color: white; background-color: black;">{{item.flightName}}</h5>
             <p class="card-text" style="font-size: 17px; font-weight: bolder;"><i>R{{item.flightPrice}}</i></p>
             <p class="card-text" style="font-size: 17px;">Seats Available:{{item.seatsAvail}}</p>
-            <button id="butt"  @click="addToCart(item.flightID,$cookies.get('userID'))" class="btn btn-primary">BOOK NOW</button>
-            <router-link @click="getFlight(item.flightID)" :to="{name:'flight', params:{flightID: item.flightID}}" class="btn" id="butt">View More</router-link>
+            <button id="butt"  @click="addToCart(item.flightID,$cookies.get('userID'))" class="btn btn-primary">PURCHASE NOW</button>
+            <router-link @click="getFlight(item.flightID)" :to="{name:'flight', params:{flightID: item.flightID}}" class="btn" id="butt">View</router-link>
           </div>
         </div>    
       </div>
@@ -137,7 +138,10 @@ export default {
   background-color: rgb(0, 187, 229) ;
 }
 #body{
-  background-color: black;
+    background-image: url(/src/assets/sky\ 3.jpg);
+    background-repeat: no-repeat;
+    background-size:cover;
+    height:90vh
 }
 #input{
   margin-top: 50px;

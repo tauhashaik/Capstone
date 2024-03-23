@@ -6,18 +6,21 @@
         <navbar/>
       </div>
       <router-view/>
+      <footerComp/>
     </div>
   </div>
 </template>
 
 <script>
 import navbar from './components/navbar.vue';
+import footerComp from './components/footerComp.vue';
 // import videoComp from './components/videoComp.vue';
 
 export default {
   components: {
     navbar,
-    // videoComp
+    footerComp
+    // videoComp,
   },
   data() {
     return {
@@ -33,9 +36,6 @@ export default {
 </script>
 
 <style scoped>
-#bod{
-  background-color: black;
-}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

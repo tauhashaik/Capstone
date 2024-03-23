@@ -104,8 +104,8 @@ export default {
 }
 
 #Logo{
-    width: 100px;
-    height: 80px;
+    width: 122px !important;
+    height: 90px !important;
     border: rgb(0, 187, 229) solid 2px !important;
     border-radius: 18px;
 }
@@ -120,7 +120,7 @@ export default {
     display: block;
     position:sticky;
     text-decoration:none;
-    padding:5px;
+    /* padding:5px; */
     font-size:18px;
     font-family: Audiowide;
     text-transform:uppercase;
@@ -333,4 +333,13 @@ li{
     background-color: var(--online-status);
   }
 }
+
+li {
+  padding: 7px; 
+}
+
+#navI {
+  font-size: 20px;
+}
+
 </style>
