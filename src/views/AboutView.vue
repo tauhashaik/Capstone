@@ -3,7 +3,7 @@
   <body id="body">
     <div id="about">
           <div  class="container">
-              <div id="aboutDiv1" class="row vertical_content_manage mt-5">
+              <div id="aboutDiv1" class="row vertical_content_manage">
                   <div class="col-lg-6">
                       <div class="about_header_main mt-3">
                           <h4 id="firstHead" class="about_heading text-capitalize font-weight-bold mt-4">WHY CHOOSE US</h4>
