@@ -141,7 +141,7 @@ export default {
     background-image: url(/src/assets/sky\ 3.jpg);
     background-repeat: no-repeat;
     background-size:cover;
-    height:150vh
+    height: 200vh;
 }
 #input{
   margin-top: 50px;
