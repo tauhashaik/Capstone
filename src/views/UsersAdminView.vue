@@ -82,7 +82,7 @@
                         <input id="input2" placeholder="quantity" type="text" class="form-control" v-model="lastName" required>
 
                         <p id= "modalP">User Role</p>
-                        <input id="input3" placeholder="amount" type="number" class="form-control" v-model="userRole" required>
+                        <input id="input3" placeholder="amount" type="text" class="form-control" v-model="userRole" required>
 
                         <p id= "modalP">Email Address</p>
                         <input id="input4" placeholder="category" type="number" class="form-control" v-model="emailAdd" required>
